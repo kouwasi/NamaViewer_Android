@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.viewer_activity.*
 class ViewerActivity : AppCompatActivity(), VideoListener {
     private lateinit var player:SimpleExoPlayer
     private lateinit var playpath:String
-    private lateinit var aspectRatio: Rational
+    private var aspectRatio = Rational(4, 3)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
