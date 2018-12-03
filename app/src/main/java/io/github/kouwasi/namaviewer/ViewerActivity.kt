@@ -11,13 +11,15 @@ import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.rtmp.RtmpDataSourceFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.video.VideoListener
+import io.github.kouwasi.namaviewer.helpers.AspectRatioHelper
 
 import kotlinx.android.synthetic.main.viewer_activity.*
 
-class ViewerActivity : AppCompatActivity() {
+class ViewerActivity : AppCompatActivity(), VideoListener {
     private lateinit var player:SimpleExoPlayer
     private lateinit var playpath:String
-    private val aspectRatio = Rational(4, 3)
+    private lateinit var aspectRatio: Rational
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +66,7 @@ class ViewerActivity : AppCompatActivity() {
 
     private fun play() {
         player = ExoPlayerFactory.newSimpleInstance(this)
+        player.addVideoListener(this)
         playerView.player = player
 
         val rtmpDataSourceFactory = RtmpDataSourceFactory()
@@ -72,6 +75,12 @@ class ViewerActivity : AppCompatActivity() {
 
         player.prepare(mediaSource)
         player.playWhenReady = true
+    }
+
+    override fun onVideoSizeChanged(width: Int, height: Int, unappliedRotationDegrees: Int, pixelWidthHeightRatio: Float) {
+        super.onVideoSizeChanged(width, height, unappliedRotationDegrees, pixelWidthHeightRatio)
+        val aspectRatio = AspectRatioHelper(width, height)
+        this.aspectRatio = aspectRatio.aspectRatio()
     }
 
     private fun stop() {
