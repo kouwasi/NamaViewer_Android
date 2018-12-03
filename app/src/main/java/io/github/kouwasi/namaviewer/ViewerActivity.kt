@@ -36,6 +36,13 @@ class ViewerActivity : AppCompatActivity() {
         enterPictureInPictureMode(pictureInPictureParams)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(!this.isInPictureInPictureMode) {
+            play()
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         stop()
