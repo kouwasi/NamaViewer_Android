@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Rational
 import android.view.View
+import android.view.WindowManager
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.rtmp.RtmpDataSourceFactory
@@ -26,6 +27,7 @@ class ViewerActivity : AppCompatActivity(), VideoListener {
         setContentView(R.layout.viewer_activity)
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         playpath = intent.getStringExtra("PLAYPATH")
         play()
