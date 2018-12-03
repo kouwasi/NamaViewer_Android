@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-        viewButton.setOnClickListener {this.onViewButtonClick()}
+        viewButton.setOnClickListener {onViewButtonClick()}
 
         // FIXME:文字列書くとこに書く
         playPathLayout.hint = "livejupiter/000000のとこ"
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         if(playPath.text.isNotEmpty()) {
             val intent = Intent(this, ViewerActivity::class.java)
             intent.putExtra("PLAYPATH", playPath.text.toString())
-            this.startActivity(intent)
+            startActivity(intent)
         } else {
             Toast.makeText(this, "playpathが空です！！", Toast.LENGTH_SHORT).show()
         }

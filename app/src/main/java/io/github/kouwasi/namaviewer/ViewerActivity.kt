@@ -32,6 +32,7 @@ class ViewerActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+
         val pictureInPictureParams = PictureInPictureParams.Builder()
                 .setAspectRatio(aspectRatio)
                 .build()
@@ -40,12 +41,15 @@ class ViewerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
         play()
     }
 
     override fun onStop() {
         super.onStop()
-        stop()
+
+        if(!isInPictureInPictureMode)
+            stop()
     }
 
     override fun onBackPressed() {
