@@ -1,8 +1,10 @@
 package io.github.kouwasi.namaviewer
 
+import android.app.PictureInPictureParams
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Rational
 import android.view.View
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -14,6 +16,7 @@ import kotlinx.android.synthetic.main.viewer_activity.*
 class ViewerActivity : AppCompatActivity() {
     private lateinit var player:SimpleExoPlayer
     private lateinit var playpath:String
+    private val aspectRatio = Rational(4, 3)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,14 +28,19 @@ class ViewerActivity : AppCompatActivity() {
         play()
     }
 
-    override fun onResume() {
-        super.onResume()
-        play()
-    }
-
     override fun onPause() {
         super.onPause()
-        stop()
+        val pictureInPictureParams = PictureInPictureParams.Builder()
+                .setAspectRatio(aspectRatio)
+                .build()
+        enterPictureInPictureMode(pictureInPictureParams)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(!this.isInPictureInPictureMode) {
+            play()
+        }
     }
 
     override fun onStop() {
