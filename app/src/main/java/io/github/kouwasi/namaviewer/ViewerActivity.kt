@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.util.Rational
 import android.view.View
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -39,8 +38,8 @@ class ViewerActivity : AppCompatActivity() {
         enterPictureInPictureMode(pictureInPictureParams)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onRestart() {
+        super.onRestart()
 
         play()
     }
@@ -48,8 +47,10 @@ class ViewerActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
-        if(!isInPictureInPictureMode)
-            stop()
+        if(isInPictureInPictureMode)
+            moveTaskToBack(true)
+
+        stop()
     }
 
     override fun onBackPressed() {
