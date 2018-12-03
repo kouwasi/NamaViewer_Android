@@ -1,9 +1,11 @@
 package io.github.kouwasi.namaviewer
 
 import android.app.PictureInPictureParams
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.util.Rational
 import android.view.View
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -38,14 +40,21 @@ class ViewerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if(!this.isInPictureInPictureMode) {
-            play()
-        }
+        play()
     }
 
     override fun onStop() {
         super.onStop()
         stop()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
     }
 
     private fun play() {
